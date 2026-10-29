@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Thiệu Nguyễn: dự án, ghi chú, công cụ, đọc tin và đặt lịch tư vấn 1:1.">
+<title>thieu.ai</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F6F3; --card:#FFFFFF; --soft:#F1EFEA; --ink:#1B1A17; --ink2:#5C5850; --ink3:#9A958B; --line:#E7E4DD;
+  --accent:#5B5BF0; --accentSoft:#ECECFE; --ok:#1FA971;
+  --cap:#FFFFFF; --capSide:#DAD6CC; --deck:#ECEAE4;
+  --shadow:0 1px 2px rgba(30,25,15,.05),0 8px 24px -12px rgba(30,25,15,.12);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121211; --card:#1B1B19; --soft:#242421; --ink:#F2F0EA; --ink2:#B3AEA3; --ink3:#7A766D; --line:#2C2B28;
+  --accent:#8B8BFF; --accentSoft:#25254A; --cap:#2A2A27; --capSide:#121211; --deck:#1E1E1C;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -12px rgba(0,0,0,.6);
+}}
+:root[data-theme="dark"]{
+  --bg:#121211; --card:#1B1B19; --soft:#242421; --ink:#F2F0EA; --ink2:#B3AEA3; --ink3:#7A766D; --line:#2C2B28;
+  --accent:#8B8BFF; --accentSoft:#25254A; --cap:#2A2A27; --capSide:#121211; --deck:#1E1E1C;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "Be Vietnam Pro",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:8px}
+.ph{color:var(--ink3)}
+.muted{color:var(--ink3);font-size:13px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 18px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;font-size:14px;transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default;transform:none}
+
+/* layout */
+.wrap{max-width:1120px;margin:0 auto;padding:48px 32px 160px;display:grid;grid-template-columns:300px 1fr;gap:56px}
+aside{position:sticky;top:48px;align-self:start}
+.ava{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,#7B7BF7,#38BDF8);display:grid;place-items:center;color:#fff;font:700 32px "Bricolage Grotesque"}
+aside h1{font:700 28px/1.15 "Bricolage Grotesque";letter-spacing:-.02em;margin:18px 0 2px}
+.handle{color:var(--ink3);font-size:14px;margin:0}
+.bio{color:var(--ink2);margin:14px 0 18px}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 12px 5px 10px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px color-mix(in srgb,var(--ok) 20%,transparent)}
+.soc{display:flex;gap:6px;margin:18px 0 22px}
+.soc a{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--ink2);border:1px solid var(--line);background:var(--card);transition:color .15s,border-color .15s}
+.soc a:hover{color:var(--ink);border-color:var(--ink3)}
+.soc svg{width:16px;height:16px}
+aside .btn{width:100%}
+.side-foot{display:flex;justify-content:space-between;align-items:center;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.ibtn{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--ink2)}
+.ibtn:hover{background:var(--soft)}
+.ibtn svg{width:17px;height:17px}
+
+/* section */
+main{min-width:0}
+.sec{animation:in .3s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.eyebrow{font:500 12px "JetBrains Mono";color:var(--ink3);letter-spacing:.04em}
+.sec h2{font:700 36px/1.1 "Bricolage Grotesque";letter-spacing:-.025em;margin:6px 0 8px}
+.lead{color:var(--ink2);margin:0 0 28px;max-width:560px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.list{display:flex;flex-direction:column}
+.item{display:flex;gap:14px;align-items:center;padding:16px 18px;border-top:1px solid var(--line);text-align:left;width:100%}
+.item:first-child{border-top:0}
+a.item:hover,button.item:hover{background:var(--soft)}
+.list .item:first-child{border-radius:18px 18px 0 0}.list .item:last-child{border-radius:0 0 18px 18px}
+.item .ic{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--soft);font:600 14px "Bricolage Grotesque"}
+.item .m{flex:1;min-width:0}.item .m b{display:block;font-weight:600}.item .m small{color:var(--ink3);font-size:13px}
+.tag{font:500 11px "JetBrains Mono";padding:3px 8px;border-radius:99px;background:var(--soft);color:var(--ink2);white-space:nowrap}
+.tag.live{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.arrow{color:var(--ink3)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{padding:20px;text-align:left;transition:transform .15s,border-color .15s;display:block}
+.tile:hover{transform:translateY(-2px);border-color:var(--ink3)}
+.tile b{display:block;font-weight:600;margin-top:12px}.tile small{color:var(--ink3);font-size:13px}
+.tile .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--accentSoft);color:var(--accent)}
+.tile .ic svg{width:18px;height:18px}
+.now{padding:20px;margin-bottom:14px;display:flex;align-items:center;gap:16px}
+.now .bar{flex:1;height:6px;border-radius:9px;background:var(--soft);overflow:hidden}.now .bar i{display:block;height:100%;width:40%;background:var(--accent);border-radius:9px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.pill{height:34px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-size:13px;color:var(--ink2)}
+.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.detail{display:none;padding:0 18px 16px 72px;color:var(--ink2);font-size:14px}
+.open+.detail{display:block}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.steps span{font-size:13px;padding:6px 12px;border-radius:10px;background:var(--soft);color:var(--ink2)}
+
+/* booking */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.plan{padding:18px;text-align:left;border-radius:16px;border:1.5px solid var(--line);background:var(--card)}
+.plan.on{border-color:var(--accent);background:var(--accentSoft)}
+.plan b{display:block}.plan small{color:var(--ink3)}.plan .p{font:700 20px "Bricolage Grotesque";margin-top:8px}
+.lbl{font-size:13px;font-weight:600;margin:0 0 10px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:22px}
+.day{padding:10px 0;border-radius:12px;border:1px solid var(--line);background:var(--card);text-align:center}
+.day small{display:block;font-size:11px;color:var(--ink3)}.day b{font:600 17px "Bricolage Grotesque"}
+.day.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.day.on small{color:inherit;opacity:.7}
+.day:disabled{opacity:.35;cursor:default}
+.slots{display:flex;flex-wrap:wrap;gap:8px;min-height:38px;margin-bottom:22px}
+.slot{height:38px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:var(--card);font:500 13px "JetBrains Mono"}
+.slot.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.bookbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 14px 14px 18px}
+
+/* ask */
+.askbox{display:flex;gap:8px;padding:8px}
+.askbox input{flex:1;min-width:0;height:46px;border:0;background:transparent;padding:0 10px;outline:0;font-size:16px}
+.reply{min-height:24px;margin:14px 2px 0;color:var(--ink2)}
+
+/* dock: row of keycaps */
+.dock{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:20;display:flex;gap:6px;padding:8px;border-radius:20px;background:color-mix(in srgb,var(--deck) 88%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:var(--shadow);max-width:calc(100vw - 24px)}
+.cap{position:relative;width:80px;height:56px;border-radius:12px;background:var(--cap);box-shadow:0 3px 0 var(--capSide),0 4px 8px -4px rgba(0,0,0,.2);display:flex;flex-direction:column;justify-content:space-between;padding:6px 8px 7px;text-align:left;transition:transform .08s,box-shadow .08s;flex:none}
+.cap .n{font:500 10px "JetBrains Mono";color:var(--ink3)}
+.cap .l{font-size:11px;font-weight:600;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap:active,.cap.press{transform:translateY(3px);box-shadow:0 0 0 var(--capSide)}
+.cap.on{background:var(--ink);color:var(--bg)}.cap.on .n{color:inherit;opacity:.6}
+.cap.space{width:150px}
+.cap:hover:not(.on){background:color-mix(in srgb,var(--cap) 92%,var(--ink))}
+
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr;gap:28px;padding:20px 18px 130px}
+  aside{position:static}
+  .side-top{display:flex;gap:14px;align-items:center}
+  .ava{width:56px;height:56px;border-radius:16px;font-size:24px}
+  aside h1{font-size:22px;margin:0}
+  .bio{margin:12px 0}
+  .soc{margin:12px 0 14px}
+  .side-foot{margin-top:16px;padding-top:12px}
+  .sec h2{font-size:28px}
+  .lead{margin-bottom:20px}
+  .grid2,.plans{grid-template-columns:1fr}
+  .days{gap:5px}.day b{font-size:15px}
+  .dock{bottom:10px;left:12px;right:12px;transform:none;overflow-x:auto;scrollbar-width:none}
+  .dock::-webkit-scrollbar{display:none}
+  .detail{padding-left:18px}
+  .bookbar{flex-direction:column;align-items:stretch}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <div class="side-top">
+      <div class="ava">T</div>
+      <div><h1>Thiệu Nguyễn</h1><p class="handle">@thieung · <span class="ph">[Vai trò]</span></p></div>
+    </div>
+    <p class="bio"><span class="ph">[Một đến hai câu giới thiệu: mình làm gì, đang xây gì, giúp được bạn điều gì.]</span></p>
+    <span class="status"><i></i>Đang nhận lịch tư vấn</span>
+    <div class="soc">
+      <a href="https://github.com/thieung" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.03-3.06-1.87-3.06-1.87 0-2.15 1.46-2.15 2.96V21h-4z"/></svg></a>
+      <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.3 10h-6.5l-5-6.1L4.8 21H1.6l7.5-8.6L1.2 3h6.6l4.6 5.6zm-1.1 16.2h1.8L6.7 4.7H4.8z"/></svg></a>
+      <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.75 15.02V8.98L15.5 12z"/></svg></a>
+      <a href="#lien-he" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+    </div>
+    <a class="btn" href="#tu-van">Đặt lịch 1:1</a>
+    <div class="side-foot"><span class="muted">thieu.ai</span><button class="ibtn" id="theme" aria-label="Đổi sáng tối"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div>
+  </aside>
+  <main id="main" aria-live="polite"></main>
+</div>
+
+<nav class="dock" id="dock" aria-label="Mục"></nav>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const ico={folder:'<path d="M3 7h7l2 2h9v10H3z"/>',book:'<path d="M4 5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/>',news:'<path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M8 9h8M8 13h8"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>'};
+const svg=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+
+const S=[
+ {id:'gioi-thieu',k:'1',cap:'Giới thiệu',title:'Chào, mình là Thiệu',lead:'<span class="ph">[Một đoạn ngắn: mình đang làm gì, quan tâm điều gì, và bạn có thể tìm thấy gì ở đây.]</span>',html:()=>`
+  <div class="card now"><span class="muted">Đang build</span><b>thieu.ai</b><div class="bar"><i></i></div><span class="muted">40%</span></div>
+  <div class="grid2">
+   <a class="card tile" href="#du-an"><span class="ic">${svg(ico.folder)}</span><b>Dự án</b><small>[N] dự án đang chạy</small></a>
+   <a class="card tile" href="#vault"><span class="ic">${svg(ico.book)}</span><b>Vault</b><small>Ghi chú và kiến thức</small></a>
+   <a class="card tile" href="#doc-tin"><span class="ic">${svg(ico.news)}</span><b>Đọc tin cùng Thiệu</b><small>Tuyển chọn mỗi tuần</small></a>
+   <a class="card tile" href="#tu-van"><span class="ic">${svg(ico.cal)}</span><b>Tư vấn 1:1</b><small>Từ [giá] / buổi</small></a>
+  </div>`},
+ {id:'du-an',k:'2',cap:'Dự án',title:'Dự án',lead:'Những gì mình đang làm và đã làm xong. Bấm vào một dự án để xem chi tiết.',html:()=>`
+  <div class="pills" data-filter><button class="pill on" data-f="all">Tất cả</button><button class="pill" data-f="live">Đang chạy</button><button class="pill" data-f="plan">Đang xây</button><button class="pill" data-f="done">Xong</button></div>
+  <div class="card list">${[
+   ['live','P','[Tên dự án 1]','[Mô tả ngắn một dòng]','live','Vai trò: [..] · Stack: [..]. [Vấn đề, cách giải, kết quả.]'],
+   ['live','A','[Tên dự án 2]','[Mô tả ngắn một dòng]','live','[Chi tiết dự án.]'],
+   ['plan','T','thieu.ai','Chính trang này, kèm bản cho agent','đang xây','Tiếp theo: nội dung thật, domain, llms.txt.'],
+   ['done','X','[Tên dự án 3]','[Mô tả ngắn một dòng]','xong','[Kết quả và bài học.]']
+  ].map(([s,i,n,d,t,x])=>`<div data-s="${s}"><button class="item" data-more><span class="ic">${i}</span><span class="m"><b class="${n.startsWith('[')?'ph':''}">${n}</b><small>${d}</small></span><span class="tag ${s==='live'?'live':''}">${t}</span></button><div class="detail">${x}</div></div>`).join('')}</div>`},
+ {id:'vault',k:'3',cap:'Vault',title:'Vault',lead:'Ghi chú mình viết lại khi học và làm. Chọn một chủ đề.',html:()=>`<div class="pills" data-topics></div><div class="card list" data-notes></div>`},
+ {id:'tools',k:'4',cap:'Tools',title:'Workflow & Tools',lead:'Bộ công cụ mình dùng hằng ngày và cách mình làm việc.',html:()=>`
+  <div class="card list">${[['CC','Claude Code','Agent viết code chính'],['ED','[Editor]','[Vì sao chọn]'],['NT','[Notes]','[Vì sao chọn]'],['CF','[Deploy]','[Vì sao chọn]']].map(([i,n,d])=>`<div class="item"><span class="ic">${i}</span><span class="m"><b class="${n.startsWith('[')?'ph':''}">${n}</b><small>${d}</small></span></div>`).join('')}</div>
+  <p class="lbl" style="margin-top:28px">Quy trình</p><div class="steps"><span>1 · Plan</span><span>2 · Build</span><span>3 · Review</span><span>4 · Ghi vào vault</span></div>`},
+ {id:'hoi',k:' ',cap:'Hỏi thieu.ai',space:1,title:'Hỏi thieu.ai',lead:'Gõ điều bạn cần, mình đưa bạn tới đúng chỗ.',html:()=>`
+  <form class="card askbox" data-ask><input placeholder="vd: muốn đặt lịch tư vấn" aria-label="Hỏi thieu.ai"><button class="btn" type="submit">Đi</button></form>
+  <div class="pills" style="margin-top:14px"><button class="pill" data-q="đặt lịch">Đặt lịch tư vấn</button><button class="pill" data-q="dự án">Đang làm gì</button><button class="pill" data-q="tool">Tool đang dùng</button></div>
+  <p class="reply" data-reply></p>`},
+ {id:'doc-tin',k:'5',cap:'Đọc tin',title:'Đọc tin cùng Thiệu',lead:'Bài viết mình thấy đáng đọc, kèm một câu vì sao.',html:()=>`
+  <div class="card list">${[['19/10','AI'],['17/10','Product'],['15/10','Dev'],['12/10','AI']].map(([d,t])=>`<a class="item" href="#doc-tin"><span class="m"><small class="mono">[${d}] · ${t}</small><b class="ph">[Tiêu đề bài viết]</b><small>[Một câu vì sao đáng đọc]</small></span><span class="arrow">↗</span></a>`).join('')}</div>`},
+ {id:'tu-van',k:'6',cap:'Tư vấn 1:1',title:'Tư vấn 1:1',lead:'Một buổi nói chuyện riêng về AI agent, harness hay sản phẩm của bạn.',html:()=>`
+  <div class="plans"><button class="plan on" data-plan="Buổi đơn"><b>Buổi đơn</b><small>60 phút · online</small><div class="p ph">[giá]</div></button><button class="plan" data-plan="Đồng hành"><b>Đồng hành</b><small>4 buổi · 1 tháng</small><div class="p ph">[giá]</div></button></div>
+  <p class="lbl">Chọn ngày</p><div class="days" data-days></div>
+  <p class="lbl">Chọn giờ</p><div class="slots" data-slots><span class="muted">Chọn ngày trước nhé.</span></div>
+  <div class="card bookbar"><span data-sum class="muted">Chưa chọn lịch.</span><button class="btn" data-book disabled>Gửi yêu cầu</button></div>
+  <p class="muted" style="margin-top:10px">Bản thiết kế: lịch trống là ví dụ, chưa nối hệ thống đặt lịch thật.</p>`},
+ {id:'thuc-hanh',k:'7',cap:'Thực hành',title:'Thực hành cùng Thiệu',lead:'Buổi làm cùng nhau, mỗi người tự dựng ra một thứ chạy được.',html:()=>`
+  <div class="card" style="padding:22px"><span class="muted">Buổi tới · online · 90 phút</span>
+   <div style="font:700 26px 'Bricolage Grotesque';margin:6px 0 2px" class="ph">[T7 02/11]</div><b class="ph">[Dựng agent đầu tiên với Claude Code]</b>
+   <div class="now" style="padding:0;margin:18px 0 6px"><div class="bar"><i style="width:70%"></i></div><span class="muted">[7/10] chỗ</span></div>
+   <button class="btn" data-hold style="margin-top:12px">Giữ chỗ</button></div>`},
+ {id:'lien-he',k:'8',cap:'Liên hệ',title:'Liên hệ',lead:'Gửi mình một lời chào, mình đọc hết.',html:()=>`
+  <div class="card bookbar"><code class="mono ph">[email@domain.com]</code><button class="btn ghost" data-copy>Sao chép</button></div>`}
+];
+const byId=Object.fromEntries(S.map(s=>[s.id,s]));
+const TOPICS={'AI agents':['Agent loop cơ bản','Thiết kế tool cho agent','Memory dài hạn'],'Harness':['Harness là gì','Hook và rule'],'Product':['Ra quyết định nhanh','Viết spec ngắn'],'System design':['Queue và retry']};
+
+const dock=$('#dock'),main=$('#main');
+dock.innerHTML=S.map(s=>`<a class="cap${s.space?' space':''}" href="#${s.id}" data-id="${s.id}"><span class="n">${s.space?'space':s.k}</span><span class="l">${s.cap}</span></a>`).join('');
+
+function render(){
+  const id=byId[location.hash.slice(1)]?location.hash.slice(1):'gioi-thieu',s=byId[id];
+  main.innerHTML=`<section class="sec"><div class="eyebrow">${s.space?'SPACE':'0'+s.k} / ${s.cap.toUpperCase()}</div><h2>${s.title}</h2><p class="lead">${s.lead}</p>${s.html()}</section>`;
+  $$('.cap',dock).forEach(c=>c.classList.toggle('on',c.dataset.id===id));
+  $(`.cap[data-id="${id}"]`,dock).scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+  document.title=(id==='gioi-thieu'?'':s.cap+' · ')+'thieu.ai';
+  init(id);
+}
+const go=id=>{if(location.hash==='#'+id)render();else location.hash=id;};
+addEventListener('hashchange',()=>{render();window.scrollTo({top:innerWidth<=900?main.offsetTop-12:0,behavior:'smooth'});});
+
+const norm=t=>t.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d').toLowerCase();
+const ROUTES=[[['dat lich','tu van','book','1:1','gia','lich'],'tu-van'],[['du an','project','dang lam'],'du-an'],[['vault','kien thuc','ghi chu','note'],'vault'],[['tool','workflow','cong cu','dung gi'],'tools'],[['doc','tin','bai viet','news'],'doc-tin'],[['thuc hanh','workshop','hoc','lab'],'thuc-hanh'],[['lien he','email','mail'],'lien-he'],[['ve thieu','la ai','gioi thieu'],'gioi-thieu']];
+
+function init(id){
+  const el=main;
+  if(id==='du-an'){$$('[data-filter] .pill',el).forEach(b=>b.onclick=()=>{$$('[data-filter] .pill',el).forEach(x=>x.classList.toggle('on',x===b));$$('[data-s]',el).forEach(r=>r.hidden=b.dataset.f!=='all'&&r.dataset.s!==b.dataset.f);});
+    $$('[data-more]',el).forEach(b=>b.onclick=()=>b.classList.toggle('open'));}
+  if(id==='vault'){const T=$('[data-topics]',el),N=$('[data-notes]',el),keys=Object.keys(TOPICS);
+    const show=k=>{$$('.pill',T).forEach(p=>p.classList.toggle('on',p.textContent===k));N.innerHTML=TOPICS[k].map((n,i)=>`<a class="item" href="#vault"><span class="m"><b class="ph">[${n}]</b><small>${i+2} ngày trước</small></span><span class="arrow">→</span></a>`).join('');};
+    T.innerHTML=keys.map(k=>`<button class="pill">${k}</button>`).join('');$$('.pill',T).forEach(p=>p.onclick=()=>show(p.textContent));show(keys[0]);}
+  if(id==='hoi'){const r=$('[data-reply]',el),inp=$('input',el);
+    const ask=q=>{const h=ROUTES.find(([ks])=>ks.some(k=>norm(q).includes(k)));if(h){r.textContent='Đưa bạn tới '+byId[h[1]].title+'…';setTimeout(()=>go(h[1]),450);}else r.textContent='Mình chưa hiểu. Thử "đặt lịch", "dự án" hoặc "tool" nhé.';};
+    $('[data-ask]',el).onsubmit=e=>{e.preventDefault();if(inp.value.trim())ask(inp.value);};
+    $$('[data-q]',el).forEach(b=>b.onclick=()=>ask(b.dataset.q));if(innerWidth>900)inp.focus({preventScroll:true});}
+  if(id==='tu-van'){const st={plan:'Buổi đơn',d:null,s:null},dow=['CN','T2','T3','T4','T5','T6','T7'],days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()+i+1);return d;});
+    const D=$('[data-days]',el),Sl=$('[data-slots]',el),sum=$('[data-sum]',el),btn=$('[data-book]',el);
+    const upd=()=>{const ok=st.d!==null&&st.s;const d=days[st.d];sum.innerHTML=ok?`<b style="color:var(--ink)">${st.plan}</b> · ${dow[d.getDay()]} ${d.getDate()}/${d.getMonth()+1} lúc <b style="color:var(--ink)">${st.s}</b>`:'Chưa chọn lịch.';btn.disabled=!ok;};
+    $$('.plan',el).forEach(p=>p.onclick=()=>{$$('.plan',el).forEach(x=>x.classList.toggle('on',x===p));st.plan=p.dataset.plan;upd();});
+    D.innerHTML=days.map((d,i)=>`<button class="day" data-i="${i}" ${d.getDay()===0?'disabled':''}><small>${dow[d.getDay()]}</small><b>${d.getDate()}</b></button>`).join('');
+    $$('.day',D).forEach(b=>b.onclick=()=>{$$('.day',D).forEach(x=>x.classList.toggle('on',x===b));st.d=+b.dataset.i;st.s=null;
+      Sl.innerHTML=['09:00','10:30','14:00','16:00','20:00'].filter((_,j)=>(j+st.d)%3).map(t=>`<button class="slot">${t}</button>`).join('');
+      $$('.slot',Sl).forEach(s=>s.onclick=()=>{$$('.slot',Sl).forEach(x=>x.classList.toggle('on',x===s));st.s=s.textContent;upd();});upd();});
+    btn.onclick=()=>{sum.innerHTML='Đã ghi nhận (bản demo). Mình sẽ phản hồi qua email.';btn.disabled=true;};}
+  if(id==='thuc-hanh'){const b=$('[data-hold]',el);b.onclick=()=>{b.textContent='Đã giữ chỗ (demo)';b.disabled=true;};}
+  if(id==='lien-he'){const b=$('[data-copy]',el);b.onclick=()=>{navigator.clipboard?.writeText($('code',el).textContent).catch(()=>{});b.textContent='Đã chép';setTimeout(()=>b.textContent='Sao chép',1400);};}
+}
+
+addEventListener('keydown',e=>{
+  if(e.metaKey||e.ctrlKey||e.altKey||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const s=S.find(x=>x.k===e.key);if(!s)return;
+  if(e.key===' ')e.preventDefault();
+  const c=$(`.cap[data-id="${s.id}"]`,dock);c.classList.add('press');setTimeout(()=>c.classList.remove('press'),120);go(s.id);
+});
+$('#theme').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark';};
+render();
+</script>
+</body>
+</html>
